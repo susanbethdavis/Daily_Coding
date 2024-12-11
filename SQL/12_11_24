@@ -4,7 +4,7 @@ Problem ID: ID 9622
 Company: Airbnb
 Difficulty Level: Easy
 Link to Problem: https://platform.stratascratch.com/coding/9622-number-of-bathrooms-and-bedrooms?code_type=1
-Interview Data: January 2018
+Interview Date: January 2018
 
 Problem: Find the average number of bathrooms and bedrooms for each city’s property types. Output the result along with the city name and the property type.
 Table: airbnb_search_details
