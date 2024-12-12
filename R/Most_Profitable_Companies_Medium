@@ -1,0 +1,27 @@
+Problem Source: StrataScratch
+Problem Name: Most Profitable Companies
+Problem ID: 10354
+Company: Forbes
+Difficulty Level: Medium
+Link to Problem: https://platform.stratascratch.com/coding/10354-most-profitable-companies?code_type=4
+
+Find the 3 most profitable companies in the world. Sort the result based on profits in descending order. If multiple companies have the same profit, assign them the same rank and include all tied companies in the top results. Output the result along with the corresponding company name.
+
+Table: forbes_global_2010_2014
+
+My Code:
+
+# Import your libraries
+library(dplyr)
+
+# Start writing code
+head(forbes_global_2010_2014)
+
+companies <- forbes_global_2010_2014 %>%
+select(company , profits) %>%
+mutate(rank= dense_rank(desc(profits))) %>%
+# dense rank will assign items with the same value to the same rank, normal rank function does not do this
+filter(rank <=3) %>%
+select(-rank) %>%
+arrange(desc(profits))
+
