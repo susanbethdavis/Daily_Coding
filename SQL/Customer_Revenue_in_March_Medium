@@ -1,0 +1,29 @@
+Problem Source: StrataScratch
+Problem Name: Customer Revenue in March
+Problem ID: 2099
+Company: Amazon, Meta
+Difficulty Level: Medium
+Link to Problem: https://platform.stratascratch.com/coding/9782-customer-revenue-in-march?code_type=1
+Interview Date: July 2018
+
+Problem: 
+Calculate the total revenue from each customer in March 2019. Include only customers who were active in March 2019.
+Output the revenue along with the customer id and sort the results based on the revenue in descending order.
+
+Table: orders
+
+My Code:
+select * from orders;
+
+/* 
+1. Filter to only 2019
+2. Filter to only March
+3. Group by cust_id
+4. create a new column to calculate sum of each customers orders 
+*/ 
+
+select cust_id, sum(total_order_cost)
+from orders
+where extract(year from order_date) = 2019 and extract(month from order_date) = 03
+group by cust_id
+order by sum desc;
