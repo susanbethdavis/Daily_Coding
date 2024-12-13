@@ -1,0 +1,47 @@
+Problem Source: StrataScratch
+Problem Name: Find the Number of Times Word Appears in Draft
+Problem ID: 9817
+Company: Google
+Difficulty Level: Medium
+Link to Problem: https://platform.stratascratch.com/coding/9817-find-the-number-of-times-each-word-appears-in-drafts?code_type=2
+
+
+Proble: Find the number of times each word appears in drafts.
+Output the word along with the corresponding number of occurrences.
+
+DataFrame: google_file_store
+
+My Code: 
+# Import your libraries
+import pandas as pd
+
+# Start writing code
+google_file_store.head()
+
+# I could try and loop through each word within each row of the contents columns. Every unique word will be added to a dictionary and given a value of 1. If this word re-appears its key value will be updated to +1
+
+#dictionary to store key value pairs
+dictionary = {}
+#iterate through each row in the contents columns
+def word_count(table):
+
+    for row in table.contents:
+        #split each row up into a list of words
+        words = row.split()
+        for word in words:
+            if word not in dictionary: 
+                dictionary[word] = 1
+            else:
+                dictionary[word] += 1
+    # Convert the dictionary to a DataFrame
+    word_count_df = pd.DataFrame(list(dictionary.items()), columns=["Word", "Count"])
+    
+    return word_count_df
+
+
+
+# select only the rows that are a draft file
+draft = google_file_store[google_file_store['filename'].str.contains('draft')]
+
+# call back to previous function to get results 
+word_count(draft)
