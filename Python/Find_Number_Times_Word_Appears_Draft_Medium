@@ -14,7 +14,7 @@ DataFrame: google_file_store
 My Code: 
 # Import your libraries
 import pandas as pd
-
+import re
 # Start writing code
 google_file_store.head()
 
@@ -24,10 +24,11 @@ google_file_store.head()
 dictionary = {}
 #iterate through each row in the contents columns
 def word_count(table):
-
+    global dictionary
     for row in table.contents:
-        #split each row up into a list of words
-        words = row.split()
+        #Clean punctuation and split each row up into a list of words
+        clean_row = re.sub(r'[^\w\s]', '', row)
+        words = clean_row.split()
         for word in words:
             if word not in dictionary: 
                 dictionary[word] = 1
