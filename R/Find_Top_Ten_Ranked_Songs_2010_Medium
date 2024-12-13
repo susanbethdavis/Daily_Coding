@@ -1,0 +1,36 @@
+Problem Source: StrataScratch
+Problem Name: Find the top ten ranked songs in 2010
+Problem ID: 9650
+Company: Spotify
+Difficulty Level: Medium
+Link to Problem: https://platform.stratascratch.com/coding/9650-find-the-top-10-ranked-songs-in-2010?code_type=4
+
+Problem: 
+What were the top 10 ranked songs in 2010?
+Output the rank, group name, and song name but do not show the same song twice.
+Sort the result based on the year_rank in ascending order.
+
+Table: billboard_top_100_year_end
+
+My Code: 
+# Import your libraries
+library(dplyr)
+
+# Start writing code
+head(billboard_top_100_year_end)
+
+# Start writing code
+top_10_2010 <- billboard_top_100_year_end %>%
+  filter(year_rank <= 10) %>% # Filter for top 10 songs
+  select(year,year_rank, group_name, song_name) %>% # Select relevant columns
+  filter(year == 2010) %>%
+  arrange(year_rank) %>% # Order by rank
+  distinct() %>% # Remove duplicates, if any 
+  select(year_rank, group_name, song_name)
+  
+official solution:
+
+ conditions <- subset(billboard_top_100_year_end, year == 2010 & year_rank %in% 1:10)
+ result <- unique(subset(conditions, select = c(year_rank, group_name,song_name)))
+ result <- result[order[result$year_rank,]]
+  
