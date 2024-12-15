@@ -1,0 +1,20 @@
+Problem Source: StrataScratch
+Problem Name: Lyft Drivers Wages
+Problem ID: 10003
+Company: Lyft
+Difficulty Level: Easy
+Link to Problem: https://platform.stratascratch.com/coding/10003-lyft-driver-wages?code_type=8
+
+Problem:
+Find all Lyft drivers who earn either equal to or less than 30k USD or equal to or more than 70k USD.
+Output all details related to retrieved records.
+
+My Code: 
+import polars as pl
+import pandas as pd
+
+# Dataset is loaded as a LazyFrame
+lf = lyft_drivers.head()
+
+# Print results
+lf = lyft_drivers.filter((pl.col("yearly_salary") <= 30000) | (pl.col("yearly_salary") >= 70000))
