@@ -1,0 +1,22 @@
+Problem Source: StrataScratch
+Problem Name: Find all posts which were reacted to with a heart 
+Problem ID: 10087
+Company: Meta
+Difficulty Level: Easy
+Link to Problem: https://platform.stratascratch.com/coding/10087-find-all-posts-which-were-reacted-to-with-a-heart?code_type=1
+
+
+Problem:
+Find all posts which were reacted to with a heart. For such posts output all columns from facebook_posts table.
+
+My Code: 
+
+SELECT DISTINCT
+    p.post_id, 
+    p.poster, 
+    p.post_text, 
+    p.post_keywords, 
+    p.post_date
+FROM facebook_reactions r
+INNER JOIN facebook_posts p ON r.post_id = p.post_id
+WHERE r.reaction = 'heart';
