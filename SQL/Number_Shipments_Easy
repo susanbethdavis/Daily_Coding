@@ -1,0 +1,17 @@
+Problem Source: StrataScratch
+Problem Name: Number of Shipments Per Month
+Problem ID: 2056
+Company: Amazon
+Difficulty Level: Easy
+Link to Problem: https://platform.stratascratch.com/coding/2099-election-results?code_type=1
+Interview Date: July 2021
+
+Problem: 
+Write a query that will calculate the number of shipments per month. The unique key for one shipment is a combination of shipment_id 
+and sub_id. Output the year_month in format YYYY-MM and the number of shipments in that month.
+
+My Code: 
+SELECT to_char(shipment_date, 'YYYY-MM') AS year_month,
+       count(distinct (shipment_id, sub_id)) AS count
+FROM amazon_shipment
+GROUP BY 1;
