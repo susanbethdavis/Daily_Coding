@@ -1,5 +1,15 @@
+Problem Source: StrataScratch
+Problem Name: Share of Active Users
+Problem ID: 2005
+Company: Meta
+Difficulty Level: Medium
+Link to Problem: https://platform.stratascratch.com/coding/2005-share-of-active-users?code_type=1
+Interview Date: January 2021
 
-my code:
+Problem: 
+Output share of US users that are active. Active users are the ones with an "open" status in the table.
+
+My Code: 
 select sum(case when status = 'open' then 1 else 0 end)::float /count(*) as proprtion_USA_approved
 from fb_active_users
 where country = 'USA';
