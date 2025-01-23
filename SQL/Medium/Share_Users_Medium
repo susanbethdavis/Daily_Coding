@@ -1,0 +1,5 @@
+
+my code:
+select sum(case when status = 'open' then 1 else 0 end)::float /count(*) as proprtion_USA_approved
+from fb_active_users
+where country = 'USA';
