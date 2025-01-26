@@ -1,0 +1,19 @@
+Problem Source: StrataScratch
+Problem Name: Find the most profitable company in the financial sector of the entire world along with its continent
+Problem ID: 9663
+Company: Forbes
+Difficulty Level: Easy
+Link to Problem: https://platform.stratascratch.com/coding/9663-find-the-most-profitable-company-in-the-financial-sector-of-the-entire-world-along-with-its-continent?code_type=1
+Interview Date: NA
+
+Problem:
+Find the most profitable company from the financial sector. Output the result along with the continent
+
+My Code: 
+
+SELECT company, continent 
+from forbes_global_2010_2014
+where sector = 'Financials'
+order by profits desc
+limit 1
+;
