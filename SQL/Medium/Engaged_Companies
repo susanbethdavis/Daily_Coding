@@ -1,0 +1,65 @@
+Problem Source: dsquestions.io
+Problem Name: SQL Query to Identify Engaged Companies
+Company: Yelp
+Difficulty Level: Medium
+Link to Problem: https://www.datasciencequestion.com/problems/sql-query-to-identify-engaged-companies?questionList=y6hB_&i=10&tab=problem
+
+
+Problem: 
+(company_id, activity_type) is the primary key of this table, which ensures unique entries for combinations of company_id and activity_type. Each row records how often a specific activity occurred for a company.
+
+The average performance for a particular activity_type is the average count across all companies that engage in this activity.
+
+An engaged company is defined as a company that has two or more activity_type entries for which their count is strictly higher than the corresponding average performance.
+
+Write a query to identify all engaged companies.
+
+Return the result in any order.
+
+
+My Code: 
+/* 
+Break into sub-problems:
+  1. Calculate the average: Start by finding the average performance for
+  each activity_type
+  
+  2. Identify qualifying activities: Compare each company's count against
+  these averages and identify the entries that exceed the ActivityAverages
+  
+  3. Count the qualifying enteries per company 
+  
+  4. Filter for engaged companies: Retain companies with two. or more qualifying entires 
+  
+  */
+  
+WITH ActivityAverages AS (
+    SELECT 
+        activity_type, 
+        AVG(count) AS avg_count
+    FROM 
+        Activities
+    GROUP BY 
+        activity_type
+),
+QualifiedActivities AS (
+    SELECT 
+        A.company_id,
+        A.activity_type
+    FROM 
+        Activities A
+    JOIN 
+        ActivityAverages AA
+    ON 
+        A.activity_type = AA.activity_type
+    WHERE 
+        A.count > AA.avg_count
+)
+SELECT 
+    company_id
+FROM 
+    QualifiedActivities
+GROUP BY 
+    company_id
+  HAVING
+    COUNT(activity_type) >= 2;
+  
