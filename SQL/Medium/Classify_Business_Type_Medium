@@ -1,0 +1,30 @@
+Problem Source: StrataScratch
+Problem Name: Classify Business Type
+Problem ID: 9726
+Company: City of San Francisco
+Difficulty Level: Medium
+Link to Problem: https://platform.stratascratch.com/coding/9726-classify-business-type?code_type=1
+Interview Date: May 2018
+
+Problem: 
+Classify each business as either a restaurant, cafe, school, or other.
+
+•	A restaurant should have the substring 'restaurant' in the business name.
+•	A cafe should have either 'cafe', 'café', or 'coffee' in the business name.
+•	A school should have the substring 'school' in the business name.
+•	All other businesses should be classified as 'other'.
+
+
+Output the business name and their classification.
+
+Table: sf_restaurant_health_violations
+My Code: 
+SELECT 
+    business_name,
+    CASE 
+        WHEN lower(business_name) LIKE '%restaurant%' THEN 'restaurant'
+        WHEN lower(business_name) LIKE '%cafe%' OR lower(business_name) LIKE '%café%' OR lower(business_name) LIKE '%coffee%' THEN 'cafe'
+        WHEN lower(business_name) LIKE '%school%' THEN 'school'
+        ELSE 'other'
+    END AS business_type
+FROM sf_restaurant_health_violations;
