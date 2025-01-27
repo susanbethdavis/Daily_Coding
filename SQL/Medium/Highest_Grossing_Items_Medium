@@ -1,0 +1,24 @@
+Problem Source: DataLemur
+Problem Name: Highest-Grossing Items
+Company: Amazon
+Difficulty Level: Medium
+Link to Problem: https://datalemur.com/questions/sql-highest-grossing
+
+Problem: 
+Assume you're given a table containing data on Amazon customers and their spending on products in different category, 
+write a query to identify the top two highest-grossing products within each category in the year 2022. 
+The output should include the category, product, and total spend.
+
+My Code: 
+with spent_table as (
+SELECT category, product, 
+sum(spend) as total_spend,
+rank() over(partition by category order by sum(spend) desc) as ranking
+FROM product_spend
+where transaction_date >= '01/01/2022 00:00:00'
+group by category, product
+)
+
+select category, product, total_spend
+from spent_table
+where ranking <=2;
