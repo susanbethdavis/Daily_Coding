@@ -1,0 +1,17 @@
+Problem Source: StrataScratch
+Problem Name: Largest Olympics
+Problem ID: 9942
+Company: ESPN
+Difficulty Level: Medium
+Link to Problem: https://platform.stratascratch.com/coding/9942-largest-olympics?code_type=1
+
+Problem: 
+Find the Olympics with the highest number of athletes. The Olympics game is a combination of the year and the season, and is found in 
+the 'games' column. Output the Olympics along with the corresponding number of athletes.
+
+My Code: 
+select games, count(distinct id) num_athletes
+from olympics_athletes_events
+group by games
+order by count(*) desc
+limit 1;
