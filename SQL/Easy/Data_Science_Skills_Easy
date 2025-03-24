@@ -22,11 +22,9 @@ order by candidate_id;
 
 /* Alternative Solution which I like more then my solution */ 
 
-select 
-  candidate_id,
-  count(skill) as skill_count
-from candidates
-where skill in ('Python', 'Tableau', 'PostgresSql')
-Group By candidate_id
-Having count(skill)  = 3
-order by candidate_id;
+SELECT candidate_id
+FROM candidates
+WHERE skill IN ('Python', 'Tableau', 'PostgreSQL')
+GROUP BY candidate_id
+HAVING COUNT(skill) = 3
+ORDER BY candidate_id;
