@@ -1,0 +1,25 @@
+Problem Source: Data Lemur
+Problem Name: Histogram of Tweets
+Difficulty Level: Easy
+Link to Problem:https://datalemur.com/questions/sql-histogram-tweets
+
+
+Problem:
+This is the same question as problem #6 in the SQL Chapter of Ace the Data Science Interview!
+
+Assume you're given a table Twitter tweet data, write a query to obtain a histogram of tweets posted per user in 2022. Output the tweet count per user as the bucket and the number of Twitter users who fall into that bucket.
+
+In other words, group the users by the number of tweets they posted in 2022 and count the number of users in each group.
+
+My Code: 
+SELECT 
+tweet_count_per_user AS tweet_bucket,
+COUNT(user_id) as users_num
+FROM(
+  SELECT
+  user_id,
+  count(tweet_id) as tweet_count_per_user
+  from tweets
+  WHERE DATE_PART('year',tweet_date) = 2022 
+  GROUP BY user_id) as total_tweets
+GROUP BY tweet_count_per_user;
