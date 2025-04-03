@@ -1,0 +1,29 @@
+Problem Source: Data Lemur
+Problem Name: International Call Percentage
+Company: Verizon
+Difficulty Level: Medium
+Link to Problem:https://datalemur.com/questions/international-call-percentage
+
+Problem: 
+A phone call is considered an international call when the person calling is in a different country than the person receiving the call.
+
+What percentage of phone calls are international? Round the result to 1 decimal.
+
+Assumption:
+
+The caller_id in phone_info table refers to both the caller and receiver.
+My Code: 
+/* A phone call is considered an international call when the person calling is in a different country
+then the person reciecing the call */ 
+WITH caller_reciever_match as
+  (SELECT  
+    caller.country_id AS caller_country,
+    receiver.country_id AS receiver_country
+  FROM phone_calls AS calls
+  LEFT JOIN phone_info AS caller
+    ON calls.caller_id = caller.caller_id
+  LEFT JOIN phone_info AS receiver
+    ON calls.receiver_id = receiver.caller_id)
+  
+Select ROUND(100 * count(case when caller_country <> receiver_country then 1 END) * 1.0/ Count(*), 1) as international_calls_pct
+from caller_reciever_match; 
