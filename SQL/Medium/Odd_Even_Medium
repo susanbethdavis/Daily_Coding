@@ -1,0 +1,39 @@
+Problem Source: Data Lemur
+Problem Name: Odd and Even Measurements
+Company: Google
+Difficulty Level: Medium
+Link to Problem: https://datalemur.com/questions/odd-even-measurements
+
+Problem: 
+This is the same question as problem #28 in the SQL Chapter of Ace the Data Science Interview!
+
+Assume you're given a table with measurement values obtained from a Google sensor over multiple days with measurements taken multiple times within each day.
+
+Write a query to calculate the sum of odd-numbered and even-numbered measurements separately for a particular day and display the results in two different columns. Refer to the Example Output below for the desired format.
+
+Definition:
+
+Within a day, measurements taken at 1st, 3rd, and 5th times are considered odd-numbered measurements, and measurements taken at 2nd, 4th, and 6th times are considered even-numbered measurements.
+Effective April 15th, 2023, the question and solution for this question have been revised.
+
+
+My Code: 
+
+WITH ranked_measurements AS (
+    SELECT 
+        measurement_id,
+        measurement_time,
+        measurement_value,
+        RANK() OVER (
+            PARTITION BY DATE(measurement_time)
+            ORDER BY measurement_time ASC
+        ) AS ranked_value
+    FROM measurements
+)
+SELECT 
+    DATE(measurement_time) AS date, 
+    SUM(CASE WHEN ranked_value IN (1, 3, 5) THEN measurement_value ELSE 0 END) AS odd_sum,
+    SUM(CASE WHEN ranked_value IN (2, 4, 6) THEN measurement_value ELSE 0 END) AS even_sum
+FROM ranked_measurements
+GROUP BY DATE(measurement_time)
+ORDER BY DATE(measurement_time);
