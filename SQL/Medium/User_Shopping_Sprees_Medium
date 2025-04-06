@@ -1,0 +1,23 @@
+Problem Source: Data Lemur
+Problem User Shopping Sprees
+Company: AMAZON
+Difficulty Level: Medium
+Link to Problem: https://datalemur.com/questions/amazon-shopping-spree
+
+Problem: 
+In an effort to identify high-value customers, Amazon asked for your help to obtain data about users who go on shopping sprees. A shopping spree occurs when a user makes purchases on 3 or more consecutive days.
+
+List the user IDs who have gone on at least 1 shopping spree in ascending order.
+
+My Code: 
+SELECT 
+    day_1.user_id
+FROM transactions AS day_1
+INNER JOIN transactions AS day_2
+    ON date(day_2.transaction_date) = date(day_1.transaction_date) + 1
+INNER JOIN transactions AS day_3
+    ON date(day_3.transaction_date) = date(day_1.transaction_date) + 2
+WHERE day_1.user_id = day_2.user_id 
+  AND day_1.user_id = day_3.user_id
+order by day_1.user_id asc;
+
