@@ -1,0 +1,16 @@
+/* 
+Problem Source: Data Lemur
+Problem Name: Sending Vs Opening Snaps
+Company: Ace teh Data Science Interview 
+Difficulty Level: Medium
+Link to Problem: https://datalemur.com/questions/time-spent-snaps
+What did I learn? -- Using aggregate filtes in the select statement was something I had not done before
+
+*/ 
+SELECT 
+"age_bucket" AS "Age Bucket", 
+ROUND(100 * SUM("time_spent") FILTER (WHERE "activity_type" = 'send') / SUM("time_spent"),2) AS "Percent Spent",
+ROUND(100 * SUM("time_spent") FILTER (WHERE "activity_type" = 'open') / SUM("time_spent"),2) AS "Percent Open"
+FROM activities 
+INNER JOIN age_breakdown ON activities.user_id = age_breakdown.user_id 
+GROUP BY age_bucket 
