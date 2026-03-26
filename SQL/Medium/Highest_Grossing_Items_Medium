@@ -22,3 +22,70 @@ group by category, product
 select category, product, total_spend
 from spent_table
 where ranking <=2;
+
+Redone on March26th, 2026
+
+My Code:
+/*SELECT 
+  category, 
+  product,
+  spend AS total_spend
+WHERE 
+  (RANK() OVER (PARTITION BY category
+               ORDER BY spend DESC)) <= 2
+FROM product_spend
+
+The above query will not run because of the order of operations within SQL. The Where clause is processes before the WINDOW
+function is calculated. The database does not know what the rank is yet becuase it has not finished looking at the rows.
+To fix this I need to use a CTE or a subquery. */
+
+-- Subquery Attempt 1
+/* 
+SELECT 
+  category, 
+  product,
+  spend AS total_spend
+FROM (
+    SELECT 
+      category, 
+      product, 
+      spend,
+      transaction_date,
+      RANK() OVER (PARTITION BY category
+      ORDER BY SUM(spend) DESC) as rank_alias
+    FROM product_spend) as subquery
+WHERE
+  rank_alias <=2
+  AND 
+  EXTRACT(YEAR FROM transaction_date) = 2022
+  
+  This query will not work because you I am mixing individual rows and aggregated rows.
+  In SQL, you generally cannot nest an aggregate function directly inside a window FUNCTION
+  unless you are also using a GROUP BY clause. 
+  
+  Here is why the database id confused:
+  1. The Window Function(RANK): Ezxpects to look at every individual row in your TABLE
+  2. The aggregate (SUM): Tell the database to squish multiple rows into one total
+*/
+
+SELECT 
+  category, 
+  product,
+  total_spend
+FROM (
+    SELECT 
+      category, 
+      product, 
+      SUM(spend) as total_spend,
+      RANK() OVER (
+      PARTITION BY category
+      ORDER BY SUM(spend) DESC) as rank_alias
+    FROM product_spend 
+    WHERE 
+      EXTRACT(YEAR FROM transaction_date) = 2022
+    GROUP BY 
+      category, product)
+    AS ranked_spending
+WHERE
+  rank_alias <=2
+
